@@ -11,6 +11,8 @@ import Foundation
 
 
 class InterfaceController: WKInterfaceController {
+    
+    var gameScene: GameScene!
 
     @IBOutlet var skInterface: WKInterfaceSKScene!
     
@@ -22,6 +24,8 @@ class InterfaceController: WKInterfaceController {
         // Load the SKScene from 'GameScene.sks'
         if let scene = GameScene(fileNamed: "GameScene") {
             
+            gameScene = scene
+            
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -31,6 +35,20 @@ class InterfaceController: WKInterfaceController {
             // Use a value that will maintain a consistent frame rate
             self.skInterface.preferredFramesPerSecond = 30
         }
+    }
+    
+    @IBAction func handleSwipeRight(swipeGesture: WKSwipeGestureRecognizer) {
+        print("Swipe right")
+        WKInterfaceDevice.current().play(.click)
+        
+        gameScene.didSwipe(swipeGesture: swipeGesture)
+    }
+    
+    @IBAction func handleSwipeLeft(swipeGesture: WKSwipeGestureRecognizer) {
+        print("Swipe left")
+        WKInterfaceDevice.current().play(.click)
+        
+        gameScene.didSwipe(swipeGesture: swipeGesture)
     }
     
     override func willActivate() {

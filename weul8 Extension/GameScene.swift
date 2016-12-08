@@ -7,40 +7,38 @@
 //
 
 import SpriteKit
+import WatchKit
 
 class GameScene: SKScene {
     
-    private var spinnyNode : SKShapeNode?
+    var label: SKLabelNode!
     
     override func sceneDidLoad() {
         
-        if let label = self.childNode(withName: "//helloLabel") as? SKLabelNode {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+        // Get label node from scene and store it for use later
+        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         
-        let w = (self.size.width + self.size.height) * 0.05
-        let spinnyNode = SKShapeNode(rectOf: CGSize(width: w, height: w), cornerRadius: w * 0.3)
-        
-        spinnyNode.position = CGPoint(x: 0.0, y: 0.0)
-        spinnyNode.strokeColor = UIColor.red
-        spinnyNode.lineWidth = 8.0
-            
-        spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                          SKAction.fadeOut(withDuration: 0.5),
-                                          SKAction.removeFromParent()]))
-        
-        spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: 6.28, duration: 1)))
-        
-        self.run(SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 2.0),
-                                                           SKAction.run({
-                                                            let n = spinnyNode.copy() as! SKShapeNode
-                                                            self.addChild(n)
-                                                           })])))
     }
     
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    func didSwipe(swipeGesture: WKSwipeGestureRecognizer) {
+        if swipeGesture.direction == .right {
+            print("GameScene swiped right")
+            moveSomeNode(who: label, amount: 100)
+        } else if swipeGesture.direction == .left {
+            print("GameScene swiped left")
+            moveSomeNode(who: label, amount: -100)
+        }
+    }
+    
+    func moveSomeNode(who: SKNode, amount: CGFloat) {
+        let move = SKAction.moveBy(x: amount, y: 0, duration: 1)
+        move.timingMode = .easeOut
+        
+        who.run(move)
     }
 }

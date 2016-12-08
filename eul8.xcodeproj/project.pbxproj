@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B29DE0C1DF9A17100C12F36 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE0B1DF9A17100C12F36 /* README.md */; };
+		9B29DE101DF9A1E400C12F36 /* Todo.md in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE0D1DF9A1E400C12F36 /* Todo.md */; };
+		9B29DE111DF9A1E400C12F36 /* Workflow.md in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE0E1DF9A1E400C12F36 /* Workflow.md */; };
 		9BCF7E811DF9976700258803 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCF7E801DF9976700258803 /* AppDelegate.swift */; };
 		9BCF7E831DF9976700258803 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9BCF7E821DF9976700258803 /* GameScene.sks */; };
 		9BCF7E851DF9976700258803 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9BCF7E841DF9976700258803 /* Actions.sks */; };
@@ -69,6 +72,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9B29DE0B1DF9A17100C12F36 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9B29DE0D1DF9A1E400C12F36 /* Todo.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
+		9B29DE0E1DF9A1E400C12F36 /* Workflow.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Workflow.md; sourceTree = "<group>"; };
 		9BCF7E7D1DF9976700258803 /* eul8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eul8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BCF7E801DF9976700258803 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9BCF7E821DF9976700258803 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -113,6 +119,9 @@
 		9BCF7E741DF9976700258803 = {
 			isa = PBXGroup;
 			children = (
+				9B29DE0B1DF9A17100C12F36 /* README.md */,
+				9B29DE0D1DF9A1E400C12F36 /* Todo.md */,
+				9B29DE0E1DF9A1E400C12F36 /* Workflow.md */,
 				9BCF7E7F1DF9976700258803 /* eul8 */,
 				9BCF7E9B1DF997B100258803 /* weul8 */,
 				9BCF7EAA1DF997B100258803 /* weul8 Extension */,
@@ -312,6 +321,9 @@
 			files = (
 				9BCF7E871DF9976700258803 /* GameScene.swift in Sources */,
 				9BCF7E891DF9976700258803 /* GameViewController.swift in Sources */,
+				9B29DE101DF9A1E400C12F36 /* Todo.md in Sources */,
+				9B29DE111DF9A1E400C12F36 /* Workflow.md in Sources */,
+				9B29DE0C1DF9A17100C12F36 /* README.md in Sources */,
 				9BCF7E811DF9976700258803 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -575,6 +587,7 @@
 				9BCF7E971DF9976700258803 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BCF7EB91DF997B200258803 /* Build configuration list for PBXNativeTarget "weul8 Extension" */ = {
 			isa = XCConfigurationList;
@@ -583,6 +596,7 @@
 				9BCF7EBB1DF997B200258803 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BCF7EBD1DF997B200258803 /* Build configuration list for PBXNativeTarget "weul8" */ = {
 			isa = XCConfigurationList;
@@ -591,6 +605,7 @@
 				9BCF7EBF1DF997B200258803 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
