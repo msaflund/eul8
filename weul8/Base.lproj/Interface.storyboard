@@ -26,6 +26,11 @@
                                         <action selector="handleSwipeLeftWithSwipeGesture:" destination="AgC-eL-Hgc" id="dVL-Ea-SKv"/>
                                     </connections>
                                 </swipeGestureRecognizer>
+                                <tapGestureRecognizer id="oFx-DO-kPA">
+                                    <connections>
+                                        <action selector="handleSingleTapWithTapGesture:" destination="AgC-eL-Hgc" id="b4J-Uz-ySJ"/>
+                                    </connections>
+                                </tapGestureRecognizer>
                             </gestureRecognizers>
                         </spriteKitScene>
                     </items>
