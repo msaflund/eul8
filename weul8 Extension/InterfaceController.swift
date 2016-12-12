@@ -13,6 +13,7 @@ import Foundation
 class InterfaceController: WKInterfaceController {
     
     var gameScene: GameScene!
+    var tm = CGAffineTransform.identity
 
     @IBOutlet var skInterface: WKInterfaceSKScene!
     
@@ -34,6 +35,11 @@ class InterfaceController: WKInterfaceController {
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
+            // Set transform for converting into scene coordinates
+            let sx = fmin(gameScene.frame.size.width/contentFrame.size.width, gameScene.frame.size.height/contentFrame.size.height)
+            let sy = sx
+            tm = tm.translatedBy(x: gameScene.frame.origin.x-contentFrame.origin.x, y: -gameScene.frame.origin.y-contentFrame.origin.y).scaledBy(x: sx, y: -sy)
+            
             // Present the scene
             self.skInterface.presentScene(scene)
             
@@ -43,26 +49,19 @@ class InterfaceController: WKInterfaceController {
     }
     
     @IBAction func handleSingleTap(tapGesture: WKTapGestureRecognizer) {
-        print("Tap")
+        print("\nTap")
         WKInterfaceDevice.current().play(.click)
-
-        var tm = CGAffineTransform.identity
-        let sx = gameScene.frame.size.width/WKInterfaceDevice.current().screenBounds.size.width
-        let sy = gameScene.frame.size.height/WKInterfaceDevice.current().screenBounds.size.height
-        let ox = self.contentFrame.origin.x
-        let oy = self.contentFrame.origin.y
         
-        tm = tm.scaledBy(x: sx, y: -sy)
-        tm = tm.translatedBy(x: (gameScene.frame.origin.x + ox) / sx, y: (gameScene.frame.origin.y + oy) / sy)
-        
+        print("GameScene tapped: \(tapGesture.locationInObject())")
+        print("\ttranslated: \(tapGesture.locationInObject().applying(tm))")
         print("screenBounds: \(WKInterfaceDevice.current().screenBounds)")
-        print("content frame: \(self.contentFrame)")
+        print("content frame: \(contentFrame)")
         print("gameScene frame: \(gameScene.frame)")
         print("anchor: \(gameScene.anchorPoint)")
+        print("tm: \(tm)")
         
-        print("Transform: \(tm)")
+        gameScene.tapped(location: tapGesture.locationInObject().applying(tm))
 
-        gameScene.didTap(tapGesture: tapGesture, tm: tm)
     }
     
     @IBAction func handleSwipeRight(swipeGesture: WKSwipeGestureRecognizer) {

@@ -36,12 +36,24 @@ class GameScene: SKScene {
         // Called before each frame is rendered
     }
     
+    func tapped(location: CGPoint) {
+        
+        let move = SKAction.move(to: location, duration: 0.2)
+        move.timingMode = .easeOut
+        
+        if testNode.contains(location) {
+            print("\t--> testNode hit")
+        }
+        
+        self.testNode.run(move)
+    }
+    
     func didTap(tapGesture: WKTapGestureRecognizer, tm: CGAffineTransform) {
         let location = tapGesture.locationInObject()
         print("GameScene tapped: \(location)")
         print("\ttranslated: \(location.applying(tm))")
    
-        let move = SKAction.move(to: location.applying(tm), duration: 0.5)
+        let move = SKAction.move(to: location.applying(tm), duration: 0.25)
         move.timingMode = .easeOut
         
         self.testNode.run(move)
