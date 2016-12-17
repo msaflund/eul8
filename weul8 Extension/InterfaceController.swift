@@ -22,11 +22,6 @@ class InterfaceController: WKInterfaceController {
         
         // Configure interface objects here.
         
-        // load data
-        //
-        let graph = DataController.sharedInstance.nextGraph()
-        graph?.printGraph()
-        
         // Load the SKScene from 'GameScene.sks'
         if let scene = GameScene(fileNamed: "GameScene") {
             
@@ -40,6 +35,16 @@ class InterfaceController: WKInterfaceController {
             let sy = sx
             tm = tm.translatedBy(x: gameScene.frame.origin.x-contentFrame.origin.x, y: -gameScene.frame.origin.y-contentFrame.origin.y).scaledBy(x: sx, y: -sy)
             
+            print("\n\(#function)")
+            print("\tscreenBounds: \(WKInterfaceDevice.current().screenBounds)")
+            print("\tcontent frame: \(contentFrame)")
+            print("\tgameScene frame: \(gameScene.frame)")
+            print("\tanchor: \(gameScene.anchorPoint)")
+            print("\ttm: \(tm)")
+            
+            // Have scene display graph
+            scene.displayGraph(contentFrame: contentFrame)
+            
             // Present the scene
             self.skInterface.presentScene(scene)
             
@@ -49,18 +54,11 @@ class InterfaceController: WKInterfaceController {
     }
     
     @IBAction func handleSingleTap(tapGesture: WKTapGestureRecognizer) {
-        print("\nTap")
+        print("\nTap: \(tapGesture.locationInObject())")
+        print("\tconverted: \(tapGesture.locationInObject().applying(tm))")
         WKInterfaceDevice.current().play(.click)
         
-        print("GameScene tapped: \(tapGesture.locationInObject())")
-        print("\ttranslated: \(tapGesture.locationInObject().applying(tm))")
-        print("screenBounds: \(WKInterfaceDevice.current().screenBounds)")
-        print("content frame: \(contentFrame)")
-        print("gameScene frame: \(gameScene.frame)")
-        print("anchor: \(gameScene.anchorPoint)")
-        print("tm: \(tm)")
-        
-        gameScene.tapped(location: tapGesture.locationInObject().applying(tm))
+        gameScene.didTap(location: tapGesture.locationInObject().applying(tm))
 
     }
     

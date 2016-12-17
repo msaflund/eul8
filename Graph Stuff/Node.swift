@@ -38,7 +38,7 @@ class Node {
     }
     
     init (v: Vertex!, radius: CGFloat = maxVertexRadius, transform: CGAffineTransform = CGAffineTransform.identity) {
-        let n = SKShapeNode(circleOfRadius: radius - 1)
+        let n = SKShapeNode(ellipseOf: CGSize(width: 2*maxVertexRadius, height: 2*maxVertexRadius).applying(transform))
         shape = n
 
         self.vertex = v
