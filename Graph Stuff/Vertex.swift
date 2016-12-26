@@ -19,6 +19,7 @@ class Vertex: Hashable {
     var color: Int
     let defaultColor: Int
     var adjList = NSMutableSet()
+    var flag: Bool = false
     // geometry
     private let pos: CGPoint
     var position: CGPoint {
@@ -43,10 +44,22 @@ class Vertex: Hashable {
         self.adjList.add(v)
         v.adjList.add(self)
     }
+    
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values `a` and `b`,
+    /// `a == b` implies that `a != b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    public static func ==(lhs: Vertex, rhs: Vertex) -> Bool {
+        return lhs === rhs
+    }
 }
 
 // MARK: Convenience
 
-func == (lhs: Vertex, rhs: Vertex) -> Bool {
-    return lhs === rhs
-}
+//func == (lhs: Vertex, rhs: Vertex) -> Bool {
+//    return lhs === rhs
+//}

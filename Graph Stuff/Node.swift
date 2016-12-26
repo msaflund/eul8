@@ -13,7 +13,19 @@
 import UIKit
 import SpriteKit
 
-class Node {
+class Node: Hashable {
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values `a` and `b`,
+    /// `a == b` implies that `a != b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    public static func ==(lhs: Node, rhs: Node) -> Bool {
+        return lhs.vertex == rhs.vertex
+    }
+
     var shape: SKShapeNode?
     var radius: CGFloat
     var vertex: Vertex
@@ -36,18 +48,23 @@ class Node {
             shape?.position = newPosition
         }
     }
+    var hashValue: Int {
+        return 1
+    }
     
     init (v: Vertex!, radius: CGFloat = maxVertexRadius, transform: CGAffineTransform = CGAffineTransform.identity) {
         let n = SKShapeNode(ellipseOf: CGSize(width: 2*maxVertexRadius, height: 2*maxVertexRadius).applying(transform))
         shape = n
 
         self.vertex = v
-        self.radius = radius
+        self.radius = radius - 1.0
         self.transform = transform
         self.position = v.position.applying(transform)
         
         n.fillColor = colorIndex(v.color)
-        n.strokeColor = n.fillColor
+//        n.glowWidth = 1.5
+        n.lineWidth = 2.0
+        n.strokeColor = UIColor.white
     }
     
     func colorIndex(_ idx: Int) -> UIColor {

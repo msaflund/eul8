@@ -12,17 +12,17 @@ import WatchKit
 class GameScene: SKScene {
     
     var label: SKLabelNode!
-    var testNode: SKSpriteNode!
+    var pinTag: SKSpriteNode?
     private var graph: Graph!
     private var graphNode: SKShapeNode!
-    private let nodes = NSMutableSet()
-    private let bridges = NSMutableSet()
+    private var nodes: Set<Node> = Set()
+    private var bridges: Set<Bridge> = Set()
     private var contentFrame: CGRect!
     private var graphTransform = CGAffineTransform.identity
     private var locked: Bool = false
+    private var here: Node?
     
     override func sceneDidLoad() {
-        
         // Get nodes from scene and store for use later
         if let aLabel = self.childNode(withName: "//helloLabel") as? SKLabelNode {
             self.label = aLabel
@@ -30,13 +30,11 @@ class GameScene: SKScene {
         else {
             self.label = SKLabelNode()
         }
-        if let aNode = self.childNode(withName: "//testNode") as? SKSpriteNode {
-            self.testNode = aNode
+        if let tag = self.childNode(withName: "//pinTag") as? SKSpriteNode {
+            tag.isHidden = true
+            tag.zPosition = 1.0
+            self.pinTag = tag
         }
-        else {
-            self.testNode = SKSpriteNode()
-        }
-        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -48,6 +46,29 @@ class GameScene: SKScene {
     func displayGraph(contentFrame: CGRect) {
         
         self.contentFrame = contentFrame
+        
+        nextGraphNode()
+    }
+    
+    func nextGraphNode() {
+        
+        // if there's an old node, move off screen, remove from parent
+        if let oldNode = self.graphNode {
+            
+            nodes.removeAll()
+            bridges.removeAll()
+            
+            let moveUp = SKAction.moveBy(x: 0.0, y: self.contentFrame.size.height*2, duration: 0.25)
+            moveUp.timingMode = .easeIn
+            let remove = SKAction.removeFromParent()
+            
+            oldNode.run(SKAction.sequence([moveUp, remove]))
+            
+            
+            
+            self.here = nil
+        }
+        
         let sceneScale = fmin(size.width/contentFrame.size.width,
                               size.height/contentFrame.size.height)
         
@@ -58,6 +79,7 @@ class GameScene: SKScene {
             let gBounds = graph.bounds
             
             // Create transform
+            self.graphTransform = CGAffineTransform.identity
             let sx = fmin(sceneScale*contentFrame.size.width/(gBounds.size.width+2*maxVertexRadius),
                           sceneScale*contentFrame.size.height/(gBounds.size.height+2*maxVertexRadius))
             let tx = -gBounds.size.width/2 - gBounds.origin.x
@@ -71,116 +93,131 @@ class GameScene: SKScene {
             print("\tgraphTransform: \(graphTransform)")
             
             // make node
-            self.graphNode = makeGraphNode(with: self.graph)
-            self.addChild(self.graphNode)
+            let newNode = makeGraphNode(with: self.graph)
+            
+            newNode.position = CGPoint(x: newNode.position.x, y: newNode.position.y - self.contentFrame.size.height*2)
+            self.addChild(newNode)
+            
+            let moveIn = SKAction.moveBy(x: 0.0, y: self.contentFrame.size.height*2, duration: 0.25)
+            moveIn.timingMode = .easeOut
+            let wait = SKAction.wait(forDuration: 0.15)
+            
+            newNode.run(SKAction.sequence([wait, moveIn]))
+            
+            self.graphNode = newNode
+            self.locked = false
         }
     }
     
     func makeGraphNode(with graph: Graph) -> SKShapeNode {
         
-        // if there's an old node, move off screen, remove from parent
-        // empty vertex set
-        nodes.removeAllObjects()
-        
-        // add vertices to vertex set
-        // create node with path
         self.graph = graph
         
-        let gn = SKShapeNode.init(path: graphPath(graph))
-        
-        // set drawing specifics
-        //
-        gn.fillColor = UIColor.clear
-        gn.strokeColor = UIColor.lightGray
-        gn.lineWidth = 2.0
+        let gn = SKShapeNode()
         
         // add vertex shapes
-        //
         for vi in graph.vertices {
             let n = Node(v: vi, radius: maxVertexRadius, transform: self.graphTransform)
-            nodes.add(n)
+            nodes.insert(n)
             gn.addChild(n.shape!)
+        }
+        
+        // add edge shapes
+        for ei in graph.edges {
+            let b = Bridge(e: ei, width: 6.0, transform: self.graphTransform)
+            bridges.insert(b)
+            gn.addChild(b.shape)
         }
         
         return gn
     }
     
-    func graphPath(_ graph: Graph) -> CGPath {
-        
-        // Create path for edges and placeholder vertices
-        //
-        let path = CGMutablePath()
-        edgePath(path, graphTransform)
-//        verticesPath(path, graphTransform)
-        
-        return path
+    // MARK: - Operations
+    
+    func neighborNodes(_ n1: Node, _ n2: Node) -> Bool {
+        return graph.adjacent(n1.vertex, n2.vertex)
     }
     
-    /**
-     Draw edges
-     - parameter path:  Path to populate
-     - parameter tm:    Affine transform to apply
-     */
-    func edgePath(_ path: CGMutablePath, _ tm: CGAffineTransform) {
-        if graph != nil {
-            for ei in graph!.edges {
-                
-                let p1 = ei.v1.position.applying(tm)
-                let p2 = ei.v2.position.applying(tm)
-                
-                let a = abs(p2.y - p1.y)
-                let b = abs(p2.x - p1.x)
-                let hyp = sqrt(a*a + b*b)
-                
-                let v1Radius: CGFloat = maxVertexRadius*tm.a
-                let v2Radius: CGFloat = maxVertexRadius*tm.d
-                
-                // if nodes do not intersect
-                if hyp > (v2Radius + v1Radius) {
-                    let alpha = asin(a/hyp)
-                    var xprim = p1.x
-                    var yprim = p1.y
-                    var xbis  = p2.x
-                    var ybis  = p2.y
-                    
-                    xprim = (xprim <= xbis)  ?	xprim + v1Radius * cos(alpha)	:	xprim - v1Radius * cos(alpha)
-                    yprim = (yprim <= ybis)  ?	yprim + v1Radius * sin(alpha)	:	yprim - v1Radius * sin(alpha)
-                    xbis  = (xprim <= xbis)	 ?	 xbis - v2Radius * cos(alpha)   :	 xbis + v2Radius * cos(alpha)
-                    ybis  = (yprim <= ybis)  ?	 ybis - v2Radius * sin(alpha)	:	 ybis + v2Radius * sin(alpha)
-                    
-                    path.move(to: CGPoint(x: xprim, y: yprim)) 
-                    path.addLine(to: CGPoint(x: xbis, y: ybis))
-                }
-            }
-        }
+    func bridgePassed(_ b: Bridge) -> Bool {
+        return b.edge.flag
     }
     
-    //
-    // draw a placeholder circle at the place of the vertex
-    //
-    func verticesPath(_ path: CGMutablePath, _ tm: CGAffineTransform) {
-        if graph != nil {
-            for vi in graph!.vertices {
-                
-                path.addEllipse(in: CGRect(x: vi.position.x - maxVertexRadius, y: vi.position.y - maxVertexRadius, width: 2*maxVertexRadius, height: 2*maxVertexRadius), transform: tm)
+    func passBridge(_ b: Bridge) {
+        b.toggleFlag()
+    }
+    
+    func bridgeAvailable(n1: Node?, n2: Node?) -> Bridge? {
+        guard n1 != nil && n2 != nil else {
+            return nil
+        }
+        
+        for b in bridges {
+            if b.isBridge(between: n1!, n2!) && !bridgePassed(b) {
+                return b
             }
         }
+        
+        return nil
+    }
+    
+    func eulerPath(g: Graph) -> Bool {
+        for e in g.edges {
+            if !e.flag {
+                return false
+            }
+        }
+        return true
     }
     
     // MARK: - Actions
     
     func didTap(location: CGPoint) {
+        guard !self.locked else { return }
         
-        if testNode.contains(location) {
-            print("\t--> testNode hit")
-            if let node = self.testNode {
-                node.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+        for node in self.nodes {
+            if let shape = node.shape {
+                
+                if shape.contains(location) {
+                    print("\t--> node hit")
+                    
+                    // special case before starting point chosen
+                    if self.here != nil {
+                        
+                        // move if there's an available bridge
+                        if let b = bridgeAvailable(n1: self.here, n2: node) {
+                            passBridge(b)
+                            
+                            self.here = node
+                            
+                            if let pin = self.pinTag as SKSpriteNode! {
+                                pin.isHidden = false
+                                moveNode(who: pin, to: here!.position)
+                            }
+//                            shape.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+                            
+                            // evaluate
+                            if eulerPath(g: self.graph) {
+                                print("\t--> path complete")
+                                self.locked = true
+                                self.pinTag?.isHidden = true
+                                nextGraphNode()
+                            }
+                        }
+                        
+                    }
+                    else {
+                        
+                        self.here = node
+                        
+                        if let pin = self.pinTag as SKSpriteNode! {
+                            pin.position = here!.position
+                            pin.isHidden = false
+                        }
+//                        shape.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+                        
+                    }
+                }
             }
-        }
-        else {
-            let move = SKAction.move(to: location, duration: 0.2)
-            move.timingMode = .easeOut
-            self.testNode.run(move)
         }
     }
     
@@ -198,6 +235,20 @@ class GameScene: SKScene {
     func moveSomeNode(who: SKNode, amount: CGFloat) {
         let move = SKAction.moveBy(x: amount, y: 0, duration: 0.5)
         move.timingMode = .easeOut
+        
+        who.run(move)
+    }
+    
+    func moveNode(who: SKNode, to p: CGPoint) {
+        let move = SKAction.move(to: p, duration: 0.5)
+        move.timingMode = .easeOut
+        
+        who.run(move)
+    }
+    
+    func moveNode(who: SKNode, by p: CGPoint) {
+        let move = SKAction.moveBy(x: p.x, y: p.y, duration: 0.5)
+        move.timingMode = .easeIn
         
         who.run(move)
     }

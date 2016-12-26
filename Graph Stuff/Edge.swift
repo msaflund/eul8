@@ -23,7 +23,6 @@ class Edge: Hashable {
     init(v1: Vertex, v2: Vertex) {
         self.v1 = v1
         self.v2 = v2
-        flag = (v1.color % 2) == 0
     }
 }
 

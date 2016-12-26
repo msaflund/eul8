@@ -27,7 +27,7 @@ class DataController {
     static let sharedInstance = DataController()
     
     private var graphs = [GraphData]()
-    private var currentGraphIndex = 0
+    private var currentGraphIndex = 2
     
     init() {
         guard let graphPath = Bundle.main.path(forResource: "Graph", ofType: "plist")   else { fatalError("Cannot find Graph.plist") }
