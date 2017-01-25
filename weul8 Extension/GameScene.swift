@@ -169,6 +169,30 @@ class GameScene: SKScene {
         return true
     }
     
+    func tryBridge(from a: Node, to b: Node) {
+        
+        // move if there's an available bridge
+        if let bridge = bridgeAvailable(n1: a, n2: b) {
+            passBridge(bridge)
+            
+            self.here = b
+            
+            if let pin = self.pinTag as SKSpriteNode! {
+                pin.isHidden = false
+                moveNode(who: pin, to: here!.position)
+            }
+            //                            shape.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+            
+            // evaluate
+            if eulerPath(g: self.graph) {
+                print("\t--> path complete")
+                self.locked = true
+                self.pinTag?.isHidden = true
+                loadGame()
+            }
+        }
+    }
+    
     // MARK: - Actions
     
     func didTap(location: CGPoint) {
@@ -182,28 +206,7 @@ class GameScene: SKScene {
                     
                     // special case before starting point chosen
                     if self.here != nil {
-                        
-                        // move if there's an available bridge
-                        if let b = bridgeAvailable(n1: self.here, n2: node) {
-                            passBridge(b)
-                            
-                            self.here = node
-                            
-                            if let pin = self.pinTag as SKSpriteNode! {
-                                pin.isHidden = false
-                                moveNode(who: pin, to: here!.position)
-                            }
-//                            shape.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-                            
-                            // evaluate
-                            if eulerPath(g: self.graph) {
-                                print("\t--> path complete")
-                                self.locked = true
-                                self.pinTag?.isHidden = true
-                                loadGame()
-                            }
-                        }
-                        
+                        tryBridge(from: self.here!, to: node)
                     }
                     else {
                         
