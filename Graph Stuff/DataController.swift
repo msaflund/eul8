@@ -64,6 +64,14 @@ class DataController {
         return Graph(graphData: graphs[idx])
     }
     
+    func graph(increment: Bool = true) -> Graph? {
+        if increment {
+            self.currentGraphIndex = (self.currentGraphIndex + 1) % graphs.count
+        }
+        
+        return Graph(graphData: graphs[self.currentGraphIndex])
+    }
+    
     func nextGraph() -> Graph? {
         self.currentGraphIndex = (self.currentGraphIndex + 1) % graphs.count
         

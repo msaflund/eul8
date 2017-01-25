@@ -43,14 +43,14 @@ class GameScene: SKScene {
     
     // MARK: - Graph Nodes
     
-    func displayGraph(contentFrame: CGRect) {
+    func displayGame(contentFrame: CGRect) {
         
         self.contentFrame = contentFrame
         
-        nextGraphNode()
+        loadGame()
     }
     
-    func nextGraphNode() {
+    func loadGame(replay: Bool = false) {
         
         // if there's an old node, move off screen, remove from parent
         if let oldNode = self.graphNode {
@@ -73,7 +73,7 @@ class GameScene: SKScene {
                               size.height/contentFrame.size.height)
         
         // Get Graph
-        if let aGraph = DataController.sharedInstance.graph(withIndex: 0) {
+        if let aGraph = DataController.sharedInstance.graph(increment: !replay) {
             self.graph = aGraph
             
             let gBounds = graph.bounds
@@ -200,7 +200,7 @@ class GameScene: SKScene {
                                 print("\t--> path complete")
                                 self.locked = true
                                 self.pinTag?.isHidden = true
-                                nextGraphNode()
+                                loadGame()
                             }
                         }
                         
@@ -230,6 +230,12 @@ class GameScene: SKScene {
             print("GameScene swiped left")
             moveSomeNode(who: label, amount: -100)
         }
+    }
+    
+    func didFinishGame(replay: Bool) {
+        self.locked = true
+        self.pinTag?.isHidden = true
+        loadGame(replay: replay)
     }
     
     func moveSomeNode(who: SKNode, amount: CGFloat) {

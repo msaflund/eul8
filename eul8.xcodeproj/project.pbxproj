@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9B0745261DFF32530013A6C7 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9BCF7E841DF9976700258803 /* Actions.sks */; };
-		9B29DE2E1DFAF5DD00C12F36 /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B29DE261DFAF5DD00C12F36 /* Data.plist */; };
-		9B29DE2F1DFAF5DD00C12F36 /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B29DE261DFAF5DD00C12F36 /* Data.plist */; };
 		9B29DE301DFAF5DD00C12F36 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE271DFAF5DD00C12F36 /* DataController.swift */; };
 		9B29DE311DFAF5DD00C12F36 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE271DFAF5DD00C12F36 /* DataController.swift */; };
 		9B29DE321DFAF5DD00C12F36 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE281DFAF5DD00C12F36 /* Edge.swift */; };
@@ -24,6 +22,7 @@
 		9B29DE3B1DFAF5DD00C12F36 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE2C1DFAF5DD00C12F36 /* Node.swift */; };
 		9B29DE3C1DFAF5DD00C12F36 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE2D1DFAF5DD00C12F36 /* Vertex.swift */; };
 		9B29DE3D1DFAF5DD00C12F36 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B29DE2D1DFAF5DD00C12F36 /* Vertex.swift */; };
+		9B3B72E21E38B6ED00842E24 /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B3B72E11E38B6ED00842E24 /* Data.plist */; };
 		9B40B37A1E0FB0E2004955AB /* pin-tag.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B40B3791E0FB0E2004955AB /* pin-tag.png */; };
 		9B40B37B1E0FB0E2004955AB /* pin-tag.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B40B3791E0FB0E2004955AB /* pin-tag.png */; };
 		9B5CBD961E0D620F00F26CFF /* Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5CBD951E0D620F00F26CFF /* Bridge.swift */; };
@@ -93,7 +92,6 @@
 		9B29DE0B1DF9A17100C12F36 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9B29DE0D1DF9A1E400C12F36 /* Todo.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
 		9B29DE0E1DF9A1E400C12F36 /* Workflow.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Workflow.md; sourceTree = "<group>"; };
-		9B29DE261DFAF5DD00C12F36 /* Data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Data.plist; sourceTree = "<group>"; };
 		9B29DE271DFAF5DD00C12F36 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		9B29DE281DFAF5DD00C12F36 /* Edge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		9B29DE291DFAF5DD00C12F36 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -101,6 +99,7 @@
 		9B29DE2B1DFAF5DD00C12F36 /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		9B29DE2C1DFAF5DD00C12F36 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Node.swift; path = "../Graph Stuff/Node.swift"; sourceTree = "<group>"; };
 		9B29DE2D1DFAF5DD00C12F36 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
+		9B3B72E11E38B6ED00842E24 /* Data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Data.plist; sourceTree = "<group>"; };
 		9B40B3791E0FB0E2004955AB /* pin-tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-tag.png"; sourceTree = "<group>"; };
 		9B5CBD951E0D620F00F26CFF /* Bridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
 		9BCF7E7D1DF9976700258803 /* eul8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eul8.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,7 +146,7 @@
 		9B29DE251DFAF5DD00C12F36 /* Graph Stuff */ = {
 			isa = PBXGroup;
 			children = (
-				9B29DE261DFAF5DD00C12F36 /* Data.plist */,
+				9B3B72E11E38B6ED00842E24 /* Data.plist */,
 				9B29DE2A1DFAF5DD00C12F36 /* Graph.plist */,
 				9B29DE271DFAF5DD00C12F36 /* DataController.swift */,
 				9B29DE281DFAF5DD00C12F36 /* Edge.swift */,
@@ -332,13 +331,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B29DE2E1DFAF5DD00C12F36 /* Data.plist in Resources */,
 				9BCF7E8C1DF9976700258803 /* Main.storyboard in Resources */,
 				9B29DE361DFAF5DD00C12F36 /* Graph.plist in Resources */,
 				9BCF7E831DF9976700258803 /* GameScene.sks in Resources */,
 				9BCF7E8E1DF9976700258803 /* Assets.xcassets in Resources */,
 				9BCF7E911DF9976700258803 /* LaunchScreen.storyboard in Resources */,
 				9B40B37A1E0FB0E2004955AB /* pin-tag.png in Resources */,
+				9B3B72E21E38B6ED00842E24 /* Data.plist in Resources */,
 				9BCF7E851DF9976700258803 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,7 +356,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B40B37B1E0FB0E2004955AB /* pin-tag.png in Resources */,
-				9B29DE2F1DFAF5DD00C12F36 /* Data.plist in Resources */,
 				9B0745261DFF32530013A6C7 /* Actions.sks in Resources */,
 				9BCF7EB41DF997B100258803 /* Assets.xcassets in Resources */,
 				9BCF7EAE1DF997B100258803 /* GameScene.sks in Resources */,

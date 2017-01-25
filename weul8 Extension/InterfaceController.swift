@@ -43,7 +43,7 @@ class InterfaceController: WKInterfaceController {
             print("\ttm: \(tm)")
             
             // Have scene display graph
-            scene.displayGraph(contentFrame: contentFrame)
+            scene.displayGame(contentFrame: contentFrame)
             
             // Present the scene
             self.skInterface.presentScene(scene)
@@ -74,6 +74,14 @@ class InterfaceController: WKInterfaceController {
         WKInterfaceDevice.current().play(.click)
         
         gameScene.didSwipe(swipeGesture: swipeGesture)
+    }
+    
+    @IBAction func doNextGame() {
+        gameScene.didFinishGame(replay: false)
+    }
+    
+    @IBAction func doRepeatGame() {
+        gameScene.didFinishGame(replay: true)
     }
     
     override func willActivate() {
