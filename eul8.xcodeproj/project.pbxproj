@@ -91,7 +91,6 @@
 /* Begin PBXFileReference section */
 		9B29DE0B1DF9A17100C12F36 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9B29DE0D1DF9A1E400C12F36 /* Todo.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
-		9B29DE0E1DF9A1E400C12F36 /* Workflow.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Workflow.md; sourceTree = "<group>"; };
 		9B29DE271DFAF5DD00C12F36 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		9B29DE281DFAF5DD00C12F36 /* Edge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		9B29DE291DFAF5DD00C12F36 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -162,7 +161,6 @@
 			children = (
 				9B29DE0B1DF9A17100C12F36 /* README.md */,
 				9B29DE0D1DF9A1E400C12F36 /* Todo.md */,
-				9B29DE0E1DF9A1E400C12F36 /* Workflow.md */,
 				9B40B3791E0FB0E2004955AB /* pin-tag.png */,
 				9B29DE251DFAF5DD00C12F36 /* Graph Stuff */,
 				9BCF7E7F1DF9976700258803 /* eul8 */,
